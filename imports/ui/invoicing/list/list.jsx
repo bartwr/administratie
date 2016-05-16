@@ -5,6 +5,9 @@ import { Meteor } from 'meteor/meteor';
 // Import models
 import { Invoices } from '../../../api/invoices.js';
 
+// Import styles
+import FormStyles from '../../../style/form.jsx';
+
 // Import templates
 import Invoice from './invoice.jsx';
 
@@ -15,8 +18,9 @@ class List extends Component {
   }
 
   renderInvoices() {
+    var self = this;
     return this.props.invoices.map((invoice) => (
-      <Invoice key={invoice._id} invoice={invoice} />
+      <Invoice key={invoice._id} invoice={invoice} viewInvoice={self.props.viewInvoice} />
     ));
   }
 
@@ -37,8 +41,8 @@ class List extends Component {
     return (
       <div>
         <header>
-          <form onSubmit={this.handleSubmit.bind(this)} >
-            <input type="text" ref="textInput" placeholder="Type een titel om een nieuwe factuur toe te voegen"
+          <form onSubmit={this.handleSubmit.bind(this)} style={styles.form}>
+            <input type="text" ref="textInput" placeholder="Typ een titel om een factuur toe te voegen" style={Object.assign({}, FormStyles.input, styles.input)}
             />
           </form>
         </header>
@@ -47,6 +51,12 @@ class List extends Component {
     );
   }
 
+}
+
+var styles = {
+  input: {
+    width: '100%',
+  }
 }
 
 export default List;
