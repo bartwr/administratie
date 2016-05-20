@@ -1,3 +1,4 @@
+import Radium from 'radium';
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
@@ -23,7 +24,7 @@ class InvoiceRow extends Component {
     return (
       <div style={Object.assign({}, Styles.flexRow, this.props.styles.invoiceRow)}>
         <div style={Object.assign({}, this.props.styles.descriptionRow)}>
-          <button onClick={this.deleteThisInvoiceRow.bind(this)}>&times;</button>
+          <button onClick={this.deleteThisInvoiceRow.bind(this)} style={this.props.styles.hideWhilePrinting}>&times;</button>
           {this.props.invoice.title}
         </div>
         <div style={Object.assign({}, this.props.styles.priceRow)}>
@@ -35,7 +36,4 @@ class InvoiceRow extends Component {
 
 }
 
-var styles = {
-}
-
-export default InvoiceRow;
+export default Radium(InvoiceRow);

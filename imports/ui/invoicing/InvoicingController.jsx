@@ -29,14 +29,13 @@ class InvoiceController extends Component {
   render() {
     let invoiceView = this.state.isInvoiceViewVisible ? <InvoiceView key={this.state.activeInvoice._id} invoice={this.state.activeInvoice} /> : false
     return (
-      <div>
+      <StyleRoot>
         <InvoiceList invoices={this.props.invoices} viewInvoice={this.viewInvoice.bind(this)} />
         {invoiceView}
-      </div>
+      </StyleRoot>
     );
   }
 }
-
 
 InvoiceController.propTypes = {
   invoices: PropTypes.array.isRequired
