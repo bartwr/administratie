@@ -12,7 +12,10 @@ class Invoice extends Component {
   }
 
   componentDidMount() {
-    this.viewThisInvoice();
+    invoiceId = document.location.pathname.split('/')[2];
+    if(invoiceId != undefined && invoiceId == this.props.invoice._id){
+      this.viewThisInvoice();
+    }
   }
 
   // viewThisInvoice :: Event -> ?
@@ -23,7 +26,7 @@ class Invoice extends Component {
 
   render() {
     return (
-      <div className="invoice" style={styles.base}>
+      <div className="invoice" data-id={this.props.invoice._id} style={styles.base}>
         <div style={styles.col}>{this.props.invoice.invoiceDate}</div>
         <div style={styles.col}>{this.props.invoice.invoiceNumber}</div>
         <div style={styles.col}>{this.props.invoice.client}</div>
