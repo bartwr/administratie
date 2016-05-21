@@ -20,7 +20,7 @@ class List extends Component {
   renderInvoices() {
     var self = this;
     return this.props.invoices.map((invoice) => (
-      <Invoice key={invoice._id} invoice={invoice} viewInvoice={self.props.viewInvoice} />
+      <Invoice key={invoice._id} invoice={invoice} viewInvoice={self.props.viewInvoice.bind(self)} closeInvoice={self.props.closeInvoice.bind(self)} />
     ));
   }
 
@@ -31,6 +31,8 @@ class List extends Component {
     const title = field.value.trim();
 
     Invoices.insert({
+      createdAt: new Date(),
+      invoiceDate: new Date(),
       title: title
     });
 

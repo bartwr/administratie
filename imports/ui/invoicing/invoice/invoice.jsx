@@ -2,6 +2,7 @@ import Radium from 'radium';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
+import $ from 'jquery';
 
 // Import models
 import { InvoiceRows }  from '../../../api/invoice-rows.js';
@@ -12,11 +13,14 @@ import FormStyles from '../../../style/form.jsx';
 
 // Import templates
 import InvoiceRow from './invoice-row';
+import ClientAddress from './client-address';
+import ProviderAddress from './provider-address';
 
 class Invoice extends Component {
  
   constructor(props) {
     super(props);
+    console.log(this.props);
   }
 
   formatPrice(price) {
@@ -42,8 +46,10 @@ class Invoice extends Component {
   handleInvoiceRowSubmit(e) {
     e.preventDefault();
 
+    console.log(this.props.invoice);
+
     InvoiceRows.insert({
-      invoiceId: this.props.invoice._id._str,
+      invoiceId: this.props.invoice._id,
       title: this.getFieldValue('title'),
       numberOf: this.getFieldValue('numberOf'),
       basePrice: this.getFieldValue('basePrice'),
@@ -74,40 +80,22 @@ class Invoice extends Component {
   // handleBasePriceChange :: Event -> ?
   handleBasePriceChange(e) { this.calculateRowPrice() }
 
+  // closeInvoice
+  closeInvoice(e) {
+    if($(e.target).closest('#invoice-to-print').length <= 0){
+      this.props.closeInvoice();
+    }
+  }
+
   render() {
     return (
-      <div style={styles.overlay}>
+      <div style={styles.overlay} onClick={this.closeInvoice.bind(this)}>
         <div style={styles.invoice} id="invoice-to-print">
           <div style={{flex: 1}}>
 
             <div style={Styles.flexRow}>
-
-              <section ref="clientAddress" style={Styles.flexCol}>
-                <b>{this.props.invoice.client}</b><br />
-                T.n.v. Bart Roorda<br />
-                Koediefstraat 2<br />
-                2511 CG  Den Haag
-              </section>
-
-              <section ref="providerAddress" style={Styles.flexCol}>
-                
-                <label style={styles.label}>Factuurnummer</label>
-                {this.props.invoice.invoiceNumber}
-                <br />
-                
-                <label style={styles.label}>Factuurdatum</label>
-                {this.props.invoice.invoiceDate}
-                <br />
-                
-                <label style={styles.label}>Periode</label>
-                ..
-                <br />
-                
-                <label style={styles.label}>Betreft</label>
-                {this.props.invoice.title}
-                <br />
-
-              </section>
+              <ClientAddress invoice={this.props.invoice} styles={styles} />
+              <ProviderAddress invoice={this.props.invoice} styles={styles}  />
             </div>
 
             <section ref="invoiceRows" style={Object.assign({}, styles.flexRow, styles.invoiceRows)}>
@@ -194,7 +182,10 @@ var styles = {
     margin: '5% auto 0 auto',
     overflow: 'auto',
     padding: '210px 80px 56px 80px',/* 20px + 36px used by footer = 56px */
-    background: '#fff url(/Logo-tuxionzwart_puntblauw_slogan.png) 80px 56px no-repeat',
+    backgroundColor: '#fff',
+    backgroundImage: 'url(/Logo-tuxionzwart_puntblauw_slogan.png)',
+    backgroundPosition: '80px 56px',
+    backgroundRepeat: 'no-repeat',
     backgroundSize: '180px',
     fontFamily: 'Helvetica, Arial, sans-serif',
     fontSize: '14px',
@@ -205,14 +196,14 @@ var styles = {
       height: '100vh',
       margin: '0',
       padding: '165px 40px 56px 40px',
-      background: '#fff url(/Logo-tuxionzwart_puntblauw_slogan.png) 40px 26px no-repeat',
+      backgroundPosition: '40px 26px',
       backgroundSize: '180px',
     }
   },
   label: {
     fontWeight: 'bold',
     display: 'inline-block',
-    width: '160px',
+    width: '130px',
   },
   invoiceRows: {
     marginTop: '47px',
@@ -264,6 +255,12 @@ var styles = {
   hideWhilePrinting: {
     '@media print': {
       display: 'none'
+    }
+  },
+  showWhilePrinting: {
+    display: 'none',
+    '@media print': {
+      display: 'block'
     }
   }
 }

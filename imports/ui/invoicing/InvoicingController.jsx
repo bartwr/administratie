@@ -26,11 +26,17 @@ class InvoiceController extends Component {
     this.forceUpdate();
   }
 
+  closeInvoice() {
+    this.state.activeInvoice = {};
+    this.state.isInvoiceViewVisible = false;
+    this.forceUpdate();
+  }
+
   render() {
-    let invoiceView = this.state.isInvoiceViewVisible ? <InvoiceView key={this.state.activeInvoice._id} invoice={this.state.activeInvoice} /> : false
+    let invoiceView = this.state.isInvoiceViewVisible ? <InvoiceView key={this.state.activeInvoice._id} invoice={this.state.activeInvoice} closeInvoice={this.closeInvoice.bind(this)} /> : false
     return (
       <StyleRoot>
-        <InvoiceList invoices={this.props.invoices} viewInvoice={this.viewInvoice.bind(this)} />
+        <InvoiceList invoices={this.props.invoices} viewInvoice={this.viewInvoice.bind(this)} closeInvoice={this.closeInvoice.bind(this)} />
         {invoiceView}
       </StyleRoot>
     );

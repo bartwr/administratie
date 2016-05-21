@@ -11,21 +11,28 @@ Invoices.schema = new SimpleSchema({
     type: Date,
     label: "Created at",
     defaultValue: new Date(),
+    optional: true
   },
   modifiedAt: {
     type: Date,
-    label: "Modified at"
+    label: "Modified at",
+    optional: true
   },
   invoiceDate: {
     type: Date,
     label: "Invoice date",
     defaultValue: new Date(),
-    optional: true,
+    optional: true
   },
   invoiceNumber: {
     type: String,
     label: "Invoice number",
     max: 200,
+    optional: true
+  },
+  client: {
+    type: String,
+    label: "Client",
     optional: true
   },
   title: {
@@ -49,13 +56,25 @@ Invoices.schema = new SimpleSchema({
     label: "Payment status",
     optional: true,
   },
+  dateFullyPaid: {
+    type: Date,
+    label: "Date fully paid",
+    optional: true
+  }
 });
-Invoices.attachSchema(Invoices.schema);
+// Invoices.attachSchema(Invoices.schema);
 
 Invoices.helpers({
   invoiceRows() {
-    return InvoiceRows.find({invoiceId: this._id._str}, {sort: {createdAt: 1}});
-  }
+    return InvoiceRows.find({invoiceId: this._id}, {sort: {createdAt: 1}});
+  },
+  invoicePrice() {
+    var invoicePrice = 0;
+    InvoiceRows.find({invoiceId: this._id}).map(function(row){
+      invoicePrice += row.rowPrice;
+    });
+    return invoicePrice;
+  },
 });
 
 Meteor.methods({
@@ -85,17 +104,10 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    Invoices.update(_id, {
-      modifiedAt: new Date(),
-      invoiceDate: data.invoiceDate,
-      invoiceNumber: data.invoiceNumber,
-      client: data.client,
-      title: data.title,
-      description: data.description,
-      amount: data.amount,
-      paymentStatus: data.paymentStatus,
-      dateFullyPaid: data.dateFullyPaid,
-    });
+    data.modifiedAt = new Date();
+    data.invoiceDate = new Date(data.invoiceDate);
+
+    Invoices.update(_id, data);
   },
   'invoices.remove'(_id){
     check(_id, String);

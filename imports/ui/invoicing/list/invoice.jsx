@@ -27,13 +27,11 @@ class Invoice extends Component {
   render() {
     return (
       <div className="invoice" data-id={this.props.invoice._id} style={styles.base}>
-        <div style={styles.col}>{this.props.invoice.invoiceDate}</div>
         <div style={styles.col}>{this.props.invoice.invoiceNumber}</div>
         <div style={styles.col}>{this.props.invoice.client}</div>
         <div style={styles.col}>{this.props.invoice.title}</div>
         <div style={styles.col}>{this.props.invoice.amount}</div>
         <div style={styles.col}>{this.props.invoice.paymentStatus}</div>
-        <div style={styles.col}>{this.props.invoice.dateFullyPaid}</div>
         <div style={styles.col}>
           <button onClick={this.viewThisInvoice.bind(this)}>&raquo;</button>
         </div>
