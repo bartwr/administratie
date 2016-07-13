@@ -26,7 +26,7 @@ class ClientAddress extends Component {
   }
 
   render() {
-    client = this.props.invoice.client ? this.props.invoice.client.replace("\n", '<br />').replace("\n", '<br />') : '';
+    client = this.props.invoice.client ? this.props.invoice.client.replace("\n", '<br />').replace("\n", '<br />').replace("\n", '<br />') : '';
     return (
       <section ref="clientAddress" style={Styles.flexCol}>
         <textarea ref="clientInput" value={this.props.invoice.client} onChange={this.updateClient.bind(this)} style={Object.assign({}, styles.clientInput, this.props.styles.hideWhilePrinting)}></textarea>

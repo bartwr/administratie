@@ -38,7 +38,8 @@ Invoices.schema = new SimpleSchema({
   title: {
     type: String,
     label: "Title",
-    max: 200
+    max: 200,
+    optional: true
   },
   description: {
     type: String,
@@ -66,7 +67,7 @@ Invoices.schema = new SimpleSchema({
 
 Invoices.helpers({
   invoiceRows() {
-    return InvoiceRows.find({invoiceId: this._id}, {sort: {createdAt: 1}});
+    return InvoiceRows.find({invoiceId: this._id}, {limit: 100, $sort: {createdAt: 1}});
   },
   invoicePrice() {
     var invoicePrice = 0;

@@ -35,7 +35,7 @@ class ProviderAddress extends Component {
     this.props.invoice.label = this.refs.label.value;
     this.props.invoice.title = this.refs.title.value;
     if(this.refs.invoiceDate.value){
-      this.props.invoice.invoiceDate = new Date(this.refs.invoiceDate.value);
+      this.props.invoice.invoiceDate = this.refs.invoiceDate.value;
     }
 
     Invoices.update(this.props.invoice._id, this.props.invoice);
@@ -45,6 +45,10 @@ class ProviderAddress extends Component {
   }
 
   render() {
+    invoiceDate = typeof this.props.invoice.invoiceDate.getFullYear === 'function'
+                    ? this.props.invoice.invoiceDate.getFullYear()+'-'+('0'+this.props.invoice.invoiceDate.getMonth()).slice(-2)+'-'+this.props.invoice.invoiceDate.getDate()
+                    : this.props.invoice.invoiceDate;
+
     return (
       <section ref="providerAddress" style={Styles.flexCol}>
         
@@ -54,7 +58,7 @@ class ProviderAddress extends Component {
           <input ref="invoiceNumber" value={this.props.invoice.invoiceNumber} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
 
           <label style={this.props.styles.label}>Factuurdatum</label>
-          <input ref="invoiceDate" type="date" value={this.props.invoice.invoiceDate.getFullYear()+'-'+('0'+this.props.invoice.invoiceDate.getMonth()).slice(-2)+'-'+this.props.invoice.invoiceDate.getDate()} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
+          <input ref="invoiceDate" type="text" value={invoiceDate} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
 
           <label style={this.props.styles.label}>Periode</label>
           <input ref="label" value={this.props.invoice.label} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
@@ -71,7 +75,7 @@ class ProviderAddress extends Component {
           <br />
           
           <label style={this.props.styles.label}>Factuurdatum</label>
-          {this.props.invoice.invoiceDate.getFullYear()+'-'+('0'+this.props.invoice.invoiceDate.getMonth()).slice(-2)+'-'+this.props.invoice.invoiceDate.getDate()}
+          {invoiceDate}
           <br />
           
           <label style={this.props.styles.label}>Periode</label>

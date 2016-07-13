@@ -8,3 +8,12 @@ html, body{
 .firstLineBold::first-line{
   font-weight:bold;
 }
+
+@media print {
+
+  html, body{ 
+    height:100%;
+    overflow:hidden;
+  }
+
+}

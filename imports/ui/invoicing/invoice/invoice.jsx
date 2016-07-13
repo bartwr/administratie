@@ -20,7 +20,6 @@ class Invoice extends Component {
  
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
 
   formatPrice(price) {
@@ -45,8 +44,6 @@ class Invoice extends Component {
   // handleInvoiceRowSubmit :: Event -> ?
   handleInvoiceRowSubmit(e) {
     e.preventDefault();
-
-    console.log(this.props.invoice);
 
     InvoiceRows.insert({
       invoiceId: this.props.invoice._id,
@@ -124,7 +121,7 @@ class Invoice extends Component {
                 </div>
                 <div style={Object.assign({}, Styles.flexRow, styles.invoiceRow, {borderBottom: 'none'})}>
                   <label style={styles.label}>Totaal incl. btw</label>
-                  <div>&euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}</div>
+                  &euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}
                 </div>
               </div>
 
@@ -180,7 +177,7 @@ var styles = {
     maxWidth: '900px',
     height: 'calc(100vh - 5%)',
     margin: '5% auto 0 auto',
-    overflow: 'auto',
+    overflow: 'hidden',
     padding: '210px 80px 56px 80px',/* 20px + 36px used by footer = 56px */
     backgroundColor: '#fff',
     backgroundImage: 'url(/Logo-tuxionzwart_puntblauw_slogan.png)',
@@ -198,6 +195,7 @@ var styles = {
       padding: '165px 40px 56px 40px',
       backgroundPosition: '40px 26px',
       backgroundSize: '180px',
+      maxHeight: '980px'
     }
   },
   label: {
@@ -241,7 +239,7 @@ var styles = {
     display: 'flex',
     fontSize: '10px',
     lineHeight: '14px',
-    position: 'absolute',
+    position: 'fixed',
     right: '20px',
     bottom: '20px',
     left: '80px',

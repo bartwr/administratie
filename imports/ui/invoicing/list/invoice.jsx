@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import $ from 'jquery';
+import Radium from 'radium';
 
 // Import models
 import { Invoices } from '../../../api/invoices.js';
@@ -48,11 +48,14 @@ var styles = {
   base: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '5px 5px'
+    padding: '5px 5px',
+    ':hover': {
+      backgroundColor: '#ccc'
+    }
   },
   col: {
     flex: 1
   }
 }
 
-export default Invoice;
+export default Radium(Invoice);
