@@ -90,6 +90,8 @@ class Invoice extends Component {
         <div style={styles.invoice} id="invoice-to-print">
           <div style={{flex: 1}}>
 
+            <img src="/Logo-tuxionzwart_puntblauw_slogan.png" style={styles.logo} />
+
             <div style={Styles.flexRow}>
               <ClientAddress invoice={this.props.invoice} styles={styles} />
               <ProviderAddress invoice={this.props.invoice} styles={styles}  />
@@ -104,9 +106,9 @@ class Invoice extends Component {
               {this.renderInvoiceRows()}
               <form onSubmit={this.handleInvoiceRowSubmit.bind(this)} style={Object.assign({}, styles.form, styles.hideWhilePrinting)}>
                 <input type="text" ref="title" placeholder="title" style={Object.assign({}, FormStyles.input, styles.input)} />
-                <input ref="numberOf" type="number" ref="numberOf" placeholder="numberOf" onChange={this.handleNumberOfChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
-                <input ref="basePrice" type="number" step="0.01" ref="basePrice" placeholder="basePrice" onChange={this.handleBasePriceChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
-                <input ref="rowPrice" type="number" step="0.01" ref="rowPrice" placeholder="rowPrice" style={Object.assign({}, FormStyles.input, styles.input)} />
+                <input ref="numberOf" type="text" ref="numberOf" placeholder="numberOf" onChange={this.handleNumberOfChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
+                <input ref="basePrice" type="text" ref="basePrice" placeholder="basePrice" onChange={this.handleBasePriceChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
+                <input ref="rowPrice" type="text" ref="rowPrice" placeholder="rowPrice" style={Object.assign({}, FormStyles.input, styles.input)} />
                 <button type="submit" style={Object.assign({}, FormStyles.input, styles.input)}>v</button>
               </form>
 
@@ -198,6 +200,16 @@ var styles = {
       maxHeight: '980px'
     }
   },
+  logo: {
+    position: 'absolute',
+    top: '56px',
+    left: '80px',
+    width: '180px',
+    '@media print': {
+      top: '35px',
+      left: '40px',
+    }
+  },
   label: {
     fontWeight: 'bold',
     display: 'inline-block',
@@ -244,6 +256,7 @@ var styles = {
     bottom: '20px',
     left: '80px',
     overflow: 'none',
+    background: '#fff',
     '@media print': {
       right: '20px',
       bottom: '0',
