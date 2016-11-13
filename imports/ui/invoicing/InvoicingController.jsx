@@ -9,6 +9,7 @@ import { Invoices } from '../../api/invoices.js';
 // Import templates
 import InvoiceList from './list/list.jsx';
 import InvoiceView from './invoice/invoice.jsx';
+import InvoicesStillToBePaid from '/imports/components/InvoicesStillToBePaid/InvoicesStillToBePaid.jsx';
 
 class InvoiceController extends Component {
  
@@ -36,6 +37,7 @@ class InvoiceController extends Component {
     let invoiceView = this.state.isInvoiceViewVisible ? <InvoiceView key={this.state.activeInvoice._id} invoice={this.state.activeInvoice} closeInvoice={this.closeInvoice.bind(this)} /> : false
     return (
       <StyleRoot>
+        <InvoicesStillToBePaid />
         <InvoiceList invoices={this.props.invoices} viewInvoice={this.viewInvoice.bind(this)} closeInvoice={this.closeInvoice.bind(this)} />
         {invoiceView}
       </StyleRoot>
