@@ -2,12 +2,16 @@
 
 A basic invoicing system.
 
-Features:
+## Features
 
 - Create invoices
 - List invoices
 - See payment status
 - See invoices still to be paid
+
+## Screenshot
+
+![Screenshot of invoice list](http://i.imgur.com/D5DwMYE.png)
 
 ## Uses
 
