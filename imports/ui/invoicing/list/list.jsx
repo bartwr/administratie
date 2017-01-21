@@ -60,7 +60,7 @@ class List extends Component {
 
     Invoices.insert({
       createdAt: new Date(),
-      invoiceDate: new Date(),
+      invoiceDate: '',
       invoiceNumber: invoiceNumber
     });
 

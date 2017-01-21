@@ -46,7 +46,7 @@ class InvoiceController extends Component {
 }
 
 InvoiceController.propTypes = {
-  invoices: PropTypes.array.isRequired
+  invoices: PropTypes.array
 };
 
 export default createContainer(() => {

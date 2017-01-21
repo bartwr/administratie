@@ -13,13 +13,14 @@ class InvoicesStillToBePaid extends Component {
   }
 
   renderInvoiceRow(invoice) {
+    let letsplit = invoice.client ? invoice.client.split("\n")[0] : ''
     return (
       <div key={invoice._id} style={s.row}>
         <div style={s.col}>{invoice.invoiceNumber}</div>
-        <div style={s.col}>{invoice.invoiceDate}</div>
+        <div style={s.col}>{invoice.invoiceDate.toString()}</div>
         <div style={s.col}>{invoice.label}</div>
         <div style={s.col}>{invoice.title}</div>
-        <div style={s.col}>{invoice.client.split("\n")[0]}</div>
+        <div style={s.col}>{letsplit}</div>
         <div style={Object.assign({textAlign: 'right'}, s.col)}>{invoice.invoicePrice()}</div>
       </div>
     )
@@ -32,8 +33,7 @@ class InvoicesStillToBePaid extends Component {
   }
 
   render() {
-    if ( ! this.props.invoicesStillToBePaid) return <div />
-    console.log(this.props.invoicesStillToBePaid);
+    if ( ! this.props.invoicesStillToBePaid) return (<div />)
     return (
       <div style={s.base}>
         {R.map(this.renderInvoiceRow, this.props.invoicesStillToBePaid)}
@@ -56,7 +56,7 @@ var s = {
 }
 
 InvoicesStillToBePaid.propTypes = {
-  invoices: PropTypes.string.isRequired
+  invoices: PropTypes.string
 };
 
 export default createContainer((props) => {

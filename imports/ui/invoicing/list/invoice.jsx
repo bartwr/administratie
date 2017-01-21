@@ -31,6 +31,7 @@ class Invoice extends Component {
     return (
       <div className="invoice" data-id={this.props.invoice._id} style={Object.assign({}, s.base, (this.props.invoice.meta && this.props.invoice.meta.dateFullyPaid) && s.isFullyPaid)}>
         <div style={s.col}>{this.props.invoice.invoiceNumber}</div>
+        <div style={s.col}>{this.props.invoice.invoiceDate.toString()}</div>
         <div style={s.col}>{this.props.invoice.client}</div>
         <div style={s.col}>{this.props.invoice.title}</div>
         <div style={s.col}>{this.props.invoice.amount}</div>
