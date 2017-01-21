@@ -87,7 +87,7 @@ class Invoice extends Component {
   // closeInvoice
   closeInvoice(e) {
     if($(e.target).closest('#invoice-to-print').length <= 0){
-      this.props.closeInvoice();
+      FlowRouter.go('dashboard')
     }
   }
 

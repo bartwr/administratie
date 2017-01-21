@@ -19,7 +19,7 @@ class Invoice extends Component {
   }
 
   // viewThisInvoice :: Event -> ?
-  viewThisInvoice() { this.props.viewInvoice(this.props.invoice) }
+  viewThisInvoice() { FlowRouter.go('invoice', { invoiceId: this.props.invoice._id } ) }
 
   // viewThisInvoice :: Event -> ?
   viewMeta() { FlowRouter.go('invoiceMeta', { invoiceId: this.props.invoice._id } ) }
