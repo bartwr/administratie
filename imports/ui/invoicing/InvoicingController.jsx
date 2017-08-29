@@ -21,8 +21,10 @@ class InvoiceController extends Component {
     if( ! this.props.invoices) return <div />
     return (
       <StyleRoot>
-        <InvoicesStillToBePaid />
-        <InvoiceList invoices={this.props.invoices} />
+        <div hidden={this.props.invoice && this.props.invoice._id}>
+          <InvoicesStillToBePaid />
+          <InvoiceList invoices={this.props.invoices} />
+        </div>
         { this.props.invoice && this.props.invoice._id ? <InvoiceView key={this.props.invoice._id} invoice={this.props.invoice} /> : false }
       </StyleRoot>
     );
