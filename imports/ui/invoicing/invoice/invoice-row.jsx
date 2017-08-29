@@ -29,7 +29,7 @@ class InvoiceRow extends Component {
       <div style={Object.assign({}, Styles.flexRow, this.props.styles.invoiceRow)}>
         <div style={Object.assign({}, this.props.styles.descriptionRow)}>
           <button style={this.props.styles.hideWhilePrinting} onClick={this.deleteThisInvoiceRow.bind(this)}>&times;</button>
-          {this.props.invoice.title}
+          <span onClick={() => this.props.newTitle(this.props.invoice)}>{this.props.invoice.title}</span>
         </div>
         <div style={Object.assign({}, this.props.styles.priceRow)} onClick={() => this.props.newRowPrice(this.props.invoice)}>
           {rowPrice}

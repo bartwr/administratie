@@ -26,6 +26,13 @@ class Invoice extends Component {
     return parseFloat(price).toFixed(2);
   }
 
+  newTitle(invoice) {
+    let title = prompt('What is the new title?', invoice.title);
+    if( ! title ) return;
+    InvoiceRows.update({_id: invoice._id}, {$set: { title: title }});
+    this.forceUpdate();
+  }
+
   newRowPrice(invoice) {
     let price = prompt('What is the new row price?', invoice.rowPrice);
     if( ! price ) return;
@@ -38,7 +45,7 @@ class Invoice extends Component {
     var self = this;
     if( ! this.props.invoice.invoiceRows() ) return false;
     return this.props.invoice.invoiceRows().map((invoice) => (
-      <InvoiceRow key={invoice._id} invoice={invoice} formatPrice={self.props.formatPrice} newRowPrice={this.newRowPrice.bind(this)} deleteInvoiceRow={this.deleteInvoiceRow.bind(this)} styles={styles} />
+      <InvoiceRow key={invoice._id} invoice={invoice} formatPrice={self.props.formatPrice} newRowPrice={this.newRowPrice.bind(this)} newTitle={this.newTitle.bind(this)} deleteInvoiceRow={this.deleteInvoiceRow.bind(this)} styles={styles} />
     ));
   }
 
