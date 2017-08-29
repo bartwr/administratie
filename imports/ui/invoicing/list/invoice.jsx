@@ -21,21 +21,27 @@ class Invoice extends Component {
   // viewThisInvoice :: Event -> ?
   viewThisInvoice() { this.props.viewInvoice(this.props.invoice) }
 
+  // viewThisInvoice :: Event -> ?
+  viewMeta() { FlowRouter.go('invoiceMeta', { invoiceId: this.props.invoice._id } ) }
+
   // deleteThisInvoice :: Event -> 1/0
   deleteThisInvoice() { if(confirm('Sure?')) Invoices.remove(this.props.invoice._id); }
 
   render() {
     return (
-      <div className="invoice" data-id={this.props.invoice._id} style={styles.base}>
-        <div style={styles.col}>{this.props.invoice.invoiceNumber}</div>
-        <div style={styles.col}>{this.props.invoice.client}</div>
-        <div style={styles.col}>{this.props.invoice.title}</div>
-        <div style={styles.col}>{this.props.invoice.amount}</div>
-        <div style={styles.col}>{this.props.invoice.paymentStatus}</div>
-        <div style={styles.col}>
-          <button onClick={this.viewThisInvoice.bind(this)}>&raquo;</button>
+      <div className="invoice" data-id={this.props.invoice._id} style={Object.assign({}, s.base, (this.props.invoice.meta && this.props.invoice.meta.dateFullyPaid) && s.isFullyPaid)}>
+        <div style={s.col}>{this.props.invoice.invoiceNumber}</div>
+        <div style={s.col}>{this.props.invoice.client}</div>
+        <div style={s.col}>{this.props.invoice.title}</div>
+        <div style={s.col}>{this.props.invoice.amount}</div>
+        <div style={s.col}>{this.props.invoice.paymentStatus}</div>
+        <div style={s.col}>
+          <button onClick={this.viewThisInvoice.bind(this)}>Invoice</button>
         </div>
-        <div style={styles.col}>
+        <div style={s.col}>
+          <button onClick={this.viewMeta.bind(this)}>Meta</button>
+        </div>
+        <div style={s.col}>
           <button onClick={this.deleteThisInvoice.bind(this)}>&times;</button>
         </div>
       </div>
@@ -44,7 +50,7 @@ class Invoice extends Component {
 
 }
 
-var styles = {
+var s = {
   base: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -52,6 +58,9 @@ var styles = {
     ':hover': {
       backgroundColor: '#ccc'
     }
+  },
+  isFullyPaid: {
+    color: 'green'
   },
   col: {
     flex: 1

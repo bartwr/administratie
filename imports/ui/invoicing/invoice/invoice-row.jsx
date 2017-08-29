@@ -21,7 +21,7 @@ class InvoiceRow extends Component {
   }
 
   render() {
-    rowPrice = this.props.invoice.rowPrice <= 0 ? '' : this.formatPrice(this.props.invoice.rowPrice)
+    rowPrice = this.props.invoice.rowPrice == 0 ? '' : this.formatPrice(this.props.invoice.rowPrice)
     return (
       <div style={Object.assign({}, Styles.flexRow, this.props.styles.invoiceRow)}>
         <div style={Object.assign({}, this.props.styles.descriptionRow)}>
