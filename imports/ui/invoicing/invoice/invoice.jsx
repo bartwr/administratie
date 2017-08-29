@@ -26,12 +26,19 @@ class Invoice extends Component {
     return parseFloat(price).toFixed(2);
   }
 
+  newRowPrice(invoice) {
+    let price = prompt('What is the new row price?', invoice.rowPrice);
+    if( ! price ) return;
+    InvoiceRows.update({_id: invoice._id}, {$set: { rowPrice: price }});
+    this.forceUpdate();
+  }
+
   // renderInvoiceRows :: ? -> Component False
   renderInvoiceRows() {
     var self = this;
     if( ! this.props.invoice.invoiceRows() ) return false;
     return this.props.invoice.invoiceRows().map((invoice) => (
-      <InvoiceRow key={invoice._id} invoice={invoice} formatPrice={self.props.formatPrice} deleteInvoiceRow={this.deleteInvoiceRow.bind(this)} styles={styles} />
+      <InvoiceRow key={invoice._id} invoice={invoice} formatPrice={self.props.formatPrice} newRowPrice={this.newRowPrice.bind(this)} deleteInvoiceRow={this.deleteInvoiceRow.bind(this)} styles={styles} />
     ));
   }
 
@@ -80,7 +87,7 @@ class Invoice extends Component {
   // closeInvoice
   closeInvoice(e) {
     if($(e.target).closest('#invoice-to-print').length <= 0){
-      this.props.closeInvoice();
+      FlowRouter.go('dashboard')
     }
   }
 

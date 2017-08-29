@@ -9,46 +9,33 @@ import { Invoices } from '../../api/invoices.js';
 // Import templates
 import InvoiceList from './list/list.jsx';
 import InvoiceView from './invoice/invoice.jsx';
+import InvoicesStillToBePaid from '/imports/components/InvoicesStillToBePaid/InvoicesStillToBePaid.jsx';
 
 class InvoiceController extends Component {
  
   constructor(props) {
     super(props);
-
-    // this.state :: {activeInvoice :: {}, isInvoiceViewVisible :: Boolean}
-    this.state = { activeInvoice: {}, isInvoiceViewVisible: false }
-  }
-
-  // viewInvoice :: Event -> ?
-  viewInvoice(invoice) {
-    this.state.activeInvoice = invoice;
-    this.state.isInvoiceViewVisible = true;
-    this.forceUpdate();
-  }
-
-  closeInvoice() {
-    this.state.activeInvoice = {};
-    this.state.isInvoiceViewVisible = false;
-    this.forceUpdate();
   }
 
   render() {
-    let invoiceView = this.state.isInvoiceViewVisible ? <InvoiceView key={this.state.activeInvoice._id} invoice={this.state.activeInvoice} closeInvoice={this.closeInvoice.bind(this)} /> : false
+    if( ! this.props.invoices) return <div />
     return (
       <StyleRoot>
-        <InvoiceList invoices={this.props.invoices} viewInvoice={this.viewInvoice.bind(this)} closeInvoice={this.closeInvoice.bind(this)} />
-        {invoiceView}
+        <InvoicesStillToBePaid />
+        <InvoiceList invoices={this.props.invoices} />
+        { this.props.invoice && this.props.invoice._id ? <InvoiceView key={this.props.invoice._id} invoice={this.props.invoice} /> : false }
       </StyleRoot>
     );
   }
 }
 
 InvoiceController.propTypes = {
-  invoices: PropTypes.array.isRequired
+  invoices: PropTypes.array
 };
 
-export default createContainer(() => {
+export default createContainer((props) => {
   return {
-    invoices: Invoices.find({}, { sort: { invoiceNumber: -1 } }).fetch()
+    invoices: Invoices.find({}, { sort: { invoiceNumber: -1 } }).fetch(),
+    invoice: props.invoiceId ? Invoices.find({_id: props.invoiceId}).fetch()[0] : {}//#TODO: Convert this to a Maybe
   }
 }, Radium(InvoiceController));

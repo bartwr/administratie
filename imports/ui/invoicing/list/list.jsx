@@ -44,7 +44,7 @@ class List extends Component {
       monthSum += invoice.invoicePrice();
 
       elementsToReturn.push(
-        <Invoice key={invoice._id} invoice={invoice} viewInvoice={self.props.viewInvoice.bind(self)} closeInvoice={self.props.closeInvoice.bind(self)} />
+        <Invoice key={invoice._id} invoice={invoice} />
       );
 
       return elementsToReturn;
@@ -60,7 +60,7 @@ class List extends Component {
 
     Invoices.insert({
       createdAt: new Date(),
-      invoiceDate: new Date(),
+      invoiceDate: '',
       invoiceNumber: invoiceNumber
     });
 
