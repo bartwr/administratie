@@ -61,6 +61,6 @@ InvoicesStillToBePaid.propTypes = {
 
 export default createContainer((props) => {
   return {
-    invoicesStillToBePaid: Invoices.find({"meta.dateFullyPaid": null}, {sort: {invoiceNumber: -1}}).fetch()
+    invoicesStillToBePaid: Invoices.find({"meta.dateFullyPaid": null, "invoiceDate": { $gte: "2018-01-01" } }, {sort: {invoiceNumber: -1}}).fetch()
   }
 }, Radium(InvoicesStillToBePaid));
