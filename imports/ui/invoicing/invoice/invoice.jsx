@@ -104,7 +104,7 @@ class Invoice extends Component {
         <div style={styles.invoice} id="invoice-to-print">
           <div style={{flex: 1}}>
 
-            <img src="/Logo-tuxionzwart_puntblauw_slogan.png" style={styles.logo} />
+            <img src="/Logo-tuxionzwart_puntblauw.png" style={styles.logo} />
 
             <div style={Styles.flexRow}>
               <ClientAddress invoice={this.props.invoice} styles={styles} />
@@ -144,7 +144,7 @@ class Invoice extends Component {
             </section>
 
             <section ref="endText" style={Object.assign({}, styles.endText)}>
-              Gelieve het bedrag van <b>&euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}</b> over te maken naar rekeningnummer <b>NL38 TRIO 0776 4815 41</b><br />
+              Gelieve het bedrag van <b>&euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}</b> over te maken naar rekeningnummer <b>NL09 BUNQ 2205 6965 80</b><br />
               ten name van <b>Tuxion</b>, onder vermelding van factuurnummer <b>{this.props.invoice.invoiceNumber}.</b>
             </section>
 
@@ -160,8 +160,8 @@ class Invoice extends Component {
               www.tuxion.nl
             </div>
             <div style={Styles.flexCol}>
-              Koediefstraat 2<br />
-              2511 CG&nbsp;&nbsp;Den Haag
+              Gerrit van de Lindestraat 5C01<br />
+              3022 TA&nbsp;&nbsp;Rotterdam
             </div>
             <div style={Styles.flexCol}>
               BTW NL048828889B01<br />
@@ -196,7 +196,7 @@ var styles = {
     overflow: 'hidden',
     padding: '210px 80px 56px 80px',/* 20px + 36px used by footer = 56px */
     backgroundColor: '#fff',
-    backgroundImage: 'url(/Logo-tuxionzwart_puntblauw_slogan.png)',
+    backgroundImage: 'url(/Logo-tuxionzwart_puntblauw.png)',
     backgroundPosition: '80px 56px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '180px',
