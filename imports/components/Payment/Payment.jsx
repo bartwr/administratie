@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import moment from 'moment'
 
 // Import models
-import Payments from '../../models/Payments.js';
+import { Payments } from '../../models/Payments.js';
 
 class Payment extends Component {
 
-  componentDidMount() {
-    this.startPayment();
+  componentDidMount(props) {
+    this.startPayment(props.amount);
   }
 
   insertPayment(data) {
@@ -35,7 +35,7 @@ class Payment extends Component {
   }
 
   startPayment() {
-    var amount = 10.00;
+    var amount = this.props.amount;
 
     this.insertPayment({
       dtCreated: moment().format(),
@@ -52,9 +52,9 @@ class Payment extends Component {
 
     this.doPayment({
       amount: amount,
-      description: "Bart's second API payment",
-      redirectUrl: "https://service.tuxion.nl/order/12345/",
-      webhookUrl:  "https://service.tuxion.nl/mollie-webhook/"
+      description: "Payment of " + amount + " EUR, via service.tuxion.nl",
+      redirectUrl: "/order/18025",
+      webhookUrl:  "http://service.tuxion.nl/mollie-webhook/"
     });
 
   }
@@ -62,7 +62,7 @@ class Payment extends Component {
   render() {
     return (
       <div style={s.base}>
-        Pay day
+        Thank you
       </div>
     )
   }

@@ -76,6 +76,16 @@ Invoices.helpers({
     });
     return invoicePrice;
   },
+  invoicePriceIncTax() {
+    var formatPrice = function(price) {
+      return parseFloat(price).toFixed(2);
+    }
+    var invoicePrice = 0;
+    InvoiceRows.find({invoiceId: this._id}).map(function(row){
+      invoicePrice += row.rowPrice;
+    });
+    return formatPrice(invoicePrice * 1.21);
+  },
 });
 
 Meteor.methods({
