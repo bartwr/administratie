@@ -1,21 +1,60 @@
 import React, { Component } from 'react'
+import moment from 'moment'
+
+// Import models
+import Payments from '../../models/Payments.js';
 
 class Payment extends Component {
 
   componentDidMount() {
-    this.pay();
+    this.startPayment();
   }
 
-  pay() {
-    Meteor.call('mollie.doPayment', {
-      info1: 'value1'
-    }, (err, res) => {
+  insertPayment(data) {
+    const callback = (err, res) => {
+      if (err) {
+        alert(err);
+      } else {
+        // Success!
+        // ..
+      }
+    }
+    Meteor.call('mollie.insertPayment', data, callback);
+  }
+
+  doPayment(data) {
+    var callback = (err, res) => {
       if (err) {
         alert(err);
       } else {
         // success!
         window.location = res.paymentUrl
       }
+    }
+    Meteor.call('mollie.doPayment', data, callback);
+  }
+
+  startPayment() {
+    var amount = 10.00;
+
+    this.insertPayment({
+      dtCreated: moment().format(),
+      invoiceId: '',
+      invoiceNumber: '',
+      invoiceDate: '',
+      title: '',
+      description: '',
+      amount: amount,
+      dateFullyPaid: '',
+      molliePaymentId: '',
+      molliePaymentStatus: ''
+    });
+
+    this.doPayment({
+      amount: amount,
+      description: "Bart's second API payment",
+      redirectUrl: "https://service.tuxion.nl/order/12345/",
+      webhookUrl:  "https://service.tuxion.nl/mollie-webhook/"
     });
 
   }

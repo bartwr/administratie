@@ -1,13 +1,49 @@
 import Mollie from 'mollie-api-node';
+import Future from 'fibers/future';
 import config from './config.js';
 
-import Future from 'fibers/future';
+// Insert models
+import { Payments } from '../../imports/models/Payments.js';
 
 Meteor.methods({
-  'mollie.doPayment'({ todoId, newText }) {
+  // new SimpleSchema({
+  //   something: { type: String }
+  // }).validate({ something });
+
+  // Insert payment method
+  'mollie.insertPayment'({
+    dtCreated,
+    invoiceId,
+    invoiceDate,
+    invoiceNumber,
+    title,
+    description,
+    amount,
+    dateFullyPaid,
+    molliePaymentId,
+    molliePaymentStatus
+  }) {
+
+    // Insert payment
+    res = Payments.insert({
+      dtCreated,
+      invoiceId,
+      invoiceDate,
+      invoiceNumber,
+      title,
+      description,
+      amount,
+      dateFullyPaid,
+      molliePaymentId,
+      molliePaymentStatus
+    });
+
+    return res;
+
+  },
+  'mollie.doPayment'({ amount, description, redirectUrl, webhookUrl }) {
     // new SimpleSchema({
-    //   todoId: { type: String },
-    //   newText: { type: String }
+    //   something: { type: String }
     // }).validate({ todoId, newText });
 
     mollie = new Mollie.API.Client;
@@ -15,11 +51,12 @@ Meteor.methods({
 
     var future = new Future();
     mollie.payments.create({
-      amount:      10.00,
-      description: "My first API payment",
-      redirectUrl: "https://webshop.example.org/order/12345/",
-      webhookUrl:  "https://webshop.example.org/mollie-webhook/"
+      amount:      amount,
+      description: description,
+      redirectUrl: redirectUrl,
+      webhookUrl:  webhookUrl
     }, Meteor.bindEnvironment(function (payment) {
+      console.log(payment);
       return future.return(payment.getPaymentUrl());
     }));
     return {

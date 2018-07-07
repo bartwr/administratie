@@ -9,6 +9,7 @@
     "jquery": "^3.3.1",
     "meteor-node-stubs": "^0.2.11",
     "mollie-api-node": "^1.4.0",
+    "moment": "^2.22.2",
     "radium": "^0.22.0",
     "ramda": "^0.22.1",
     "react": "^15.6.2",
