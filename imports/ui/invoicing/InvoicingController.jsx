@@ -37,7 +37,7 @@ InvoiceController.propTypes = {
 
 export default createContainer((props) => {
   return {
-    invoices: Invoices.find({}, { sort: { invoiceNumber: -1 } }).fetch(),
+    invoices: Invoices.find({"invoiceNumber": { $gte: "18000" }}, { sort: { invoiceNumber: -1 } }).fetch(),
     invoice: props.invoiceId ? Invoices.find({_id: props.invoiceId}).fetch()[0] : {}//#TODO: Convert this to a Maybe
   }
 }, Radium(InvoiceController));
