@@ -58,7 +58,7 @@ class List extends Component {
     const field = ReactDOM.findDOMNode(this.refs.textInput);
     const invoiceNumber = field.value.trim();
 
-    Invoices.insert({
+    let lastInsertedId = Invoices.insert({
       createdAt: new Date(),
       invoiceDate: '',
       invoiceNumber: invoiceNumber

@@ -141,6 +141,29 @@ class Invoice extends Component {
                 </div>
               </div>
 
+              <div style={styles.invoiceEndRows} hidden>
+                <div style={Object.assign({}, Styles.flexRow, styles.invoiceRow, {borderBottom: 'none'})}>
+                  <label style={Object.assign({}, styles.label, {fontWeight: 'normal'})}>Subtotaal</label>
+                  <div>&euro; {this.formatPrice(this.props.invoice.invoicePrice())}</div>
+                </div>
+                <div style={Object.assign({}, Styles.flexRow, styles.invoiceRow, {borderBottom: 'solid #E8E8E8 2px'})}>
+                  <label style={Object.assign({}, styles.label, {width: '300px', fontWeight: 'normal'})}>Korting indien betaald &lt; 2018-07-08</label>
+                  <div>-&nbsp;&euro;&nbsp;{this.formatPrice(this.props.invoice.invoicePrice() * 0.05)}</div>
+                </div>
+                <div style={Object.assign({}, Styles.flexRow, styles.invoiceRow, {borderBottom: 'none'})}>
+                  <label style={styles.label}>Totaal excl. btw</label>
+                  <div><b>&euro; {this.formatPrice((this.props.invoice.invoicePrice() - (this.props.invoice.invoicePrice() * 0.05)))}</b></div>
+                </div>
+                <div style={Object.assign({}, Styles.flexRow, styles.invoiceRow, {borderBottom: 'solid #E8E8E8 2px'})}>
+                  <label style={Object.assign({}, styles.label, {fontWeight: 'normal'})}>Totaal btw 21%</label>
+                  <div>&euro; {this.formatPrice((this.props.invoice.invoicePrice() - (this.props.invoice.invoicePrice() * 0.05)) * 0.21)}</div>
+                </div>
+                <div style={Object.assign({}, Styles.flexRow, styles.invoiceRow, {borderBottom: 'none'})}>
+                  <label style={styles.label}>Totaal incl. btw</label>
+                  <b>&euro; {this.formatPrice((this.props.invoice.invoicePrice() - (this.props.invoice.invoicePrice() * 0.05)) * 1.21)}</b>
+                </div>
+              </div>
+
             </section>
 
             <section ref="endText" style={Object.assign({}, styles.endText)}>
