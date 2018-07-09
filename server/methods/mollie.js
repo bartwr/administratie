@@ -48,6 +48,8 @@ Meteor.methods({
     mollie = new Mollie.API.Client;
     mollie.setApiKey(process.env.MOLLIE_APY_KEY);
 
+    console.log('process.env.MOLLIE_APY_KEY', process.env.MOLLIE_APY_KEY);
+
     var future = new Future();
     mollie.payments.create({
       amount:      amount,
