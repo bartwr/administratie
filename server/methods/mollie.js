@@ -46,9 +46,9 @@ Meteor.methods({
     // }).validate({ todoId, newText });
 
     mollie = new Mollie.API.Client;
-    mollie.setApiKey(process.env.MOLLIE_APY_KEY);
+    mollie.setApiKey(process.env.MOLLIE_API_KEY);
 
-    console.log('process.env.MOLLIE_APY_KEY', process.env.MOLLIE_APY_KEY);
+    console.log('process.env.MOLLIE_API_KEY', process.env.MOLLIE_API_KEY);
 
     var future = new Future();
     mollie.payments.create({
