@@ -35,51 +35,34 @@ class Invoice extends Component {
    Mollie
   */
 
-  insertPayment(data) {
-    const callback = (err, res) => {
+  insertPayment(data, callback) {
+    return Meteor.call('mollie.insertPayment', data, callback);
+  }
+
+  // getPaymentUrl :: Object invoice -> void
+  getPaymentUrl(invoice) {
+
+    const insertPaymentCallback = (err, res) => {
       if (err) {
+        console.log(err);
         alert(err);
       } else {
         // Success!
-        // ..
+        prompt('This is the payment URL for: ' + invoice.title, 'https://service.tuxion.nl/pay/' + res);
       }
     }
-    Meteor.call('mollie.insertPayment', data, callback);
-  }
-
-  doPayment(data) {
-    var callback = (err, res) => {
-      if (err) {
-        alert(err);
-      } else {
-        // success!
-        window.location = res.paymentUrl
-      }
-    }
-    Meteor.call('mollie.doPayment', data, callback);
-  }
-
-  startPayment(amount) {
 
     this.insertPayment({
       dtCreated: moment().format(),
-      invoiceId: '',
-      invoiceNumber: '',
-      invoiceDate: '',
-      title: '',
-      description: '',
-      amount: amount,
-      dateFullyPaid: '',
-      molliePaymentId: '',
-      molliePaymentStatus: ''
-    });
-
-    this.doPayment({
-      amount: amount,
-      description: "Payment of " + amount + " EUR, via service.tuxion.nl",
-      redirectUrl: "http://service.tuxion.nl//return-page.php?invoice=113&hash=4b1c5d57daef9636d5786791de13dea1",
-      webhookUrl:  "http://service.tuxion.nl/mollie-webhook/"
-    });
+      invoiceId: invoice._id,
+      invoiceNumber: invoice.invoiceNumber,
+      invoiceDate: invoice.invoiceDate.toString(),
+      title: invoice.title,
+      amount: invoice.amount,
+      dateFullyPaid: null,
+      molliePaymentId: null,
+      molliePaymentStatus: 'open'
+    }, insertPaymentCallback);
 
   }
 
@@ -99,7 +82,7 @@ class Invoice extends Component {
           <button onClick={this.viewMeta.bind(this)}>Meta</button>
         </div>
         <div style={s.col}>
-          <button onClick={() => this.startPayment(this.props.invoice.invoicePriceIncTax())}>Pay</button>
+          <button onClick={() => this.getPaymentUrl(this.props.invoice)}>Pay</button>
         </div>
         <div style={s.col}>
           <button onClick={this.deleteThisInvoice.bind(this)}>&times;</button>
