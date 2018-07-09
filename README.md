@@ -1,4 +1,4 @@
-# administratie v1.0.0
+# administratie v1.1.0
 
 A basic invoicing system.
 
