@@ -19,6 +19,7 @@ class InvoiceController extends Component {
 
   render() {
     if( ! this.props.invoices) return <div />
+    if( prompt('Wat is het wachtwoord?') != process.env.ADMIN_PASSWD ) return <div />
     return (
       <StyleRoot>
         <div hidden={this.props.invoice && this.props.invoice._id}>

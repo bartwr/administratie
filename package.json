@@ -2,7 +2,8 @@
   "name": "administratie",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "heroku": "heroku local"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.40",
