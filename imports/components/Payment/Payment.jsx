@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { createContainer } from 'meteor/react-meteor-data';
 import moment from 'moment'
 
 // Import models
@@ -6,22 +7,17 @@ import { Payments } from '../../models/Payments.js';
 
 class Payment extends Component {
 
-  componentDidMount(props) {
-    this.startPayment(props.amount);
+  // As soon as the payment information is received from mongo: do the payment
+  componentWillReceiveProps(nextProps) {
+    this.doPayment({
+      amount: nextProps.payment.amount,
+      description: nextProps.payment.title,
+      redirectUrl: "https://service.tuxion.nl/order/" + nextProps.payment.invoiceId,
+      webhookUrl:  "https://service.tuxion.nl/mollie-webhook/"
+    });
   }
 
-  insertPayment(data) {
-    const callback = (err, res) => {
-      if (err) {
-        alert(err);
-      } else {
-        // Success!
-        // ..
-      }
-    }
-    Meteor.call('mollie.insertPayment', data, callback);
-  }
-
+  // doPayment :: Object MolliePayment -> void
   doPayment(data) {
     var callback = (err, res) => {
       if (err) {
@@ -32,31 +28,6 @@ class Payment extends Component {
       }
     }
     Meteor.call('mollie.doPayment', data, callback);
-  }
-
-  startPayment() {
-    var amount = this.props.amount;
-
-    this.insertPayment({
-      dtCreated: moment().format(),
-      invoiceId: '',
-      invoiceNumber: '',
-      invoiceDate: '',
-      title: '',
-      description: '',
-      amount: amount,
-      dateFullyPaid: '',
-      molliePaymentId: '',
-      molliePaymentStatus: ''
-    });
-
-    this.doPayment({
-      amount: amount,
-      description: "Payment of " + amount + " EUR, via service.tuxion.nl",
-      redirectUrl: "/order/18025",
-      webhookUrl:  "http://service.tuxion.nl/mollie-webhook/"
-    });
-
   }
 
   render() {
@@ -75,4 +46,8 @@ s = {
   }
 }
 
-module.exports = Payment
+export default createContainer((props) => {
+  return {
+    payment: Payments.find({_id: props.paymentId}).fetch()[0]
+  }
+}, Payment);

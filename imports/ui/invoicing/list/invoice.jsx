@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
+import React, { Component } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 import Radium from 'radium';
 import moment from 'moment';
 
 // Import models
 import { Invoices } from '../../../api/invoices.js';
+import { Payments } from '../../../models/Payments.js';
  
 class Invoice extends Component {
  
@@ -31,14 +33,6 @@ class Invoice extends Component {
   // deleteThisInvoice :: Event -> 1/0
   deleteThisInvoice() { if(confirm('Sure?')) Invoices.remove(this.props.invoice._id); }
 
-  /*
-   Mollie
-  */
-
-  insertPayment(data, callback) {
-    return Meteor.call('mollie.insertPayment', data, callback);
-  }
-
   // getPaymentUrl :: Object invoice -> void
   getPaymentUrl(invoice) {
 
@@ -52,13 +46,13 @@ class Invoice extends Component {
       }
     }
 
-    this.insertPayment({
+    Meteor.call('mollie.insertPayment', {
       dtCreated: moment().format(),
       invoiceId: invoice._id,
       invoiceNumber: invoice.invoiceNumber,
       invoiceDate: invoice.invoiceDate.toString(),
       title: invoice.title,
-      amount: invoice.amount,
+      amount: (invoice.invoicePrice() * 1.21),
       dateFullyPaid: null,
       molliePaymentId: null,
       molliePaymentStatus: 'open'
@@ -82,7 +76,12 @@ class Invoice extends Component {
           <button onClick={this.viewMeta.bind(this)}>Meta</button>
         </div>
         <div style={s.col}>
-          <button onClick={() => this.getPaymentUrl(this.props.invoice)}>Pay</button>
+          <a href={'https://service.tuxion.nl/pay/' + (this.props.payment ? this.props.payment._id : 'NOID')} target="_blank">
+            Pay
+          </a>&nbsp;
+          <button onClick={() => this.getPaymentUrl(this.props.invoice)}>
+            Generate
+          </button>
         </div>
         <div style={s.col}>
           <button onClick={this.deleteThisInvoice.bind(this)}>&times;</button>
@@ -110,4 +109,8 @@ var s = {
   }
 }
 
-export default Radium(Invoice);
+export default createContainer((props) => {
+  return {
+    payment: Payments.find({invoiceId: props.invoice._id}).fetch()[0]
+  }
+}, Radium(Invoice));
