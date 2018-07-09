@@ -1,6 +1,5 @@
 import Mollie from 'mollie-api-node';
 import Future from 'fibers/future';
-import config from './config.js';
 
 // Insert models
 import { Payments } from '../../imports/models/Payments.js';
@@ -47,7 +46,7 @@ Meteor.methods({
     // }).validate({ todoId, newText });
 
     mollie = new Mollie.API.Client;
-    mollie.setApiKey(config.mollieApiKey);
+    mollie.setApiKey(process.env.MOLLIE_APY_KEY);
 
     var future = new Future();
     mollie.payments.create({

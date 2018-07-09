@@ -76,7 +76,7 @@ class Invoice extends Component {
           <button onClick={this.viewMeta.bind(this)}>Meta</button>
         </div>
         <div style={s.col}>
-          <a href={'https://service.tuxion.nl/pay/' + (this.props.payment ? this.props.payment._id : 'NOID')} target="_blank">
+          <a href={'https://my.tuxion.nl/pay/' + (this.props.payment ? this.props.payment._id : 'NOID')} target="_blank">
             Pay
           </a>&nbsp;
           <button onClick={() => this.getPaymentUrl(this.props.invoice)}>
