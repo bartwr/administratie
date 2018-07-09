@@ -15,11 +15,14 @@ class InvoiceController extends Component {
  
   constructor(props) {
     super(props);
+
+    if( prompt('Wat is het wachtwoord?') != 'hallo daar' ) {
+      document.location = 'https://www.bartroorda.nl';
+    }
   }
 
   render() {
     if( ! this.props.invoices) return <div />
-    if( prompt('Wat is het wachtwoord?') != process.env.ADMIN_PASSWD ) return <div />
     return (
       <StyleRoot>
         <div hidden={this.props.invoice && this.props.invoice._id}>
