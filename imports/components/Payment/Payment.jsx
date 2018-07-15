@@ -17,7 +17,7 @@ class Payment extends Component {
   componentWillReceiveProps(nextProps) {
     this.doPayment({
       amount: nextProps.payment.amount,
-      description: nextProps.payment.title,
+      description: 'Tuxion: ' + nextProps.payment.title,
       redirectUrl: "https://my.tuxion.nl/order/" + nextProps.payment.invoiceId,
       webhookUrl:  "https://my.tuxion.nl/mollie-webhook/"
     });
