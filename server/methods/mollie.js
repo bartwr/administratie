@@ -45,6 +45,8 @@ Meteor.methods({
     //   something: { type: String }
     // }).validate({ todoId, newText });
 
+    console.log('Starting to do a payment')
+
     mollie = new Mollie.API.Client;
     mollie.setApiKey(process.env.MOLLIE_API_KEY);
 
