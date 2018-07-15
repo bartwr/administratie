@@ -7,6 +7,12 @@ import { Payments } from '../../models/Payments.js';
 
 class Payment extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = { status: 'Getting your payment..' }
+  }
+
   // As soon as the payment information is received from mongo: do the payment
   componentWillReceiveProps(nextProps) {
     this.doPayment({
@@ -19,11 +25,17 @@ class Payment extends Component {
 
   // doPayment :: Object MolliePayment -> void
   doPayment(data) {
+    this.setState({
+      status: 'Creating new payment'
+    });
     var callback = (err, res) => {
       if (err) {
         alert(err);
       } else {
         // success!
+        this.setState({
+          status: 'Payment succesful created! Redirecting to ' + res.paymentUrl
+        });
         window.location = res.paymentUrl
       }
     }
@@ -33,7 +45,8 @@ class Payment extends Component {
   render() {
     return (
       <div style={s.base}>
-        Thank you
+        <p>Thank you</p>
+        <p><small>({this.state.status})</small></p>
       </div>
     )
   }
