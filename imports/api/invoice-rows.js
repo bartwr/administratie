@@ -38,7 +38,7 @@ InvoiceRows.schema = new SimpleSchema({
     optional: true,
   },
 });
-// InvoiceRows.attachSchema(InvoiceRows.schema);
+InvoiceRows.attachSchema(InvoiceRows.schema);
 
 Meteor.methods({
   'invoiceRows.insert'(data) {
