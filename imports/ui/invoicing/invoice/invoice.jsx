@@ -187,7 +187,7 @@ class Invoice extends Component {
               3022 TA&nbsp;&nbsp;Rotterdam
             </div>
             <div style={Styles.flexCol}>
-              BTW NL048828889B01<br />
+              BTW NL001176503B66<br />
               KVK 24371485
             </div>
           </footer>
