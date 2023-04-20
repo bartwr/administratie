@@ -18,7 +18,7 @@ class InvoiceMeta extends Component {
   }
 
   handleChange(e) {
-    tmp = [];
+    let tmp = [];
     tmp[$(e.target).attr('name')] = $(e.target).val();
     this.setState(tmp);
   };
