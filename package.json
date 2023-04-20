@@ -6,7 +6,7 @@
     "heroku": "heroku local"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.55",
+    "@babel/runtime": "^7.21.0",
     "fibers": "^5.0.0",
     "jquery": "^3.3.1",
     "meteor-node-stubs": "^0.2.11",
