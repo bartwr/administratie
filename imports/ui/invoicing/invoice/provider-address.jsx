@@ -45,7 +45,7 @@ class ProviderAddress extends Component {
   }
 
   render() {
-    invoiceDate = typeof this.props.invoice.invoiceDate.getFullYear === 'function'
+    const invoiceDate = (this.props.invoice && this.props.invoice.invoiceDate && typeof this.props.invoice.invoiceDate.getFullYear === 'function')
                     ? this.props.invoice.invoiceDate.getFullYear()+'-'+('0'+this.props.invoice.invoiceDate.getMonth()).slice(-2)+'-'+this.props.invoice.invoiceDate.getDate()
                     : this.props.invoice.invoiceDate;
 

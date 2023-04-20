@@ -15,7 +15,7 @@ class Invoice extends Component {
   }
 
   componentDidMount() {
-    invoiceId = document.location.pathname.split('/')[2];
+    const invoiceId = document.location.pathname.split('/')[2];
     if(invoiceId != undefined && invoiceId == this.props.invoice._id){
       this.viewThisInvoice();
     }

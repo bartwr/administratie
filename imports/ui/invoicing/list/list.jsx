@@ -84,11 +84,6 @@ class List extends Component {
 }
 
 var styles = {
-  base: {
-    '@media print': {
-      // display: 'none'
-    }
-  },
   input: {
     width: '100%',
   },
