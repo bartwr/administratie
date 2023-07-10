@@ -168,14 +168,14 @@ class Invoice extends Component {
 
             <section ref="endText" style={Object.assign({}, styles.endText)}>
               Gelieve het bedrag van <b>&euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}</b> over te maken naar rekeningnummer <b>NL09 BUNQ 2205 6965 80</b><br />
-              ten name van <b>Tuxion</b>, onder vermelding van factuurnummer <b>{this.props.invoice.invoiceNumber}.</b>
+              ten name van <b>Tuxion B.V.</b>, onder vermelding van factuurnummer <b>{this.props.invoice.invoiceNumber}.</b>
             </section>
 
           </div>
 
           <footer ref="footer" style={Object.assign({}, Styles.flexRow, styles.footer)}>
             <div style={Styles.flexCol}>
-              <b>Tuxion</b><br />
+              <b>Tuxion B.V.</b><br />
               +31 (0) 6 46 38 68 64
             </div>
             <div style={Styles.flexCol}>
@@ -188,7 +188,7 @@ class Invoice extends Component {
             </div>
             <div style={Styles.flexCol}>
               BTW NL001176503B66<br />
-              KVK 24371485
+              KVK 90666917
             </div>
           </footer>
 
