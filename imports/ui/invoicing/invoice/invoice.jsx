@@ -167,7 +167,7 @@ class Invoice extends Component {
             </section>
 
             <section ref="endText" style={Object.assign({}, styles.endText)}>
-              Gelieve het bedrag van <b>&euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}</b> over te maken naar rekeningnummer <b>NL09 BUNQ 2205 6965 80</b><br />
+              Gelieve het bedrag van <b>&euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}</b> over te maken naar rekeningnummer <b>NL10 BUNQ 2094 3091 34</b><br />
               ten name van <b>Tuxion B.V.</b>, onder vermelding van factuurnummer <b>{this.props.invoice.invoiceNumber}.</b>
             </section>
 
