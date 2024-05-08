@@ -183,8 +183,8 @@ class Invoice extends Component {
               www.tuxion.nl
             </div>
             <div style={Styles.flexCol}>
-              Gerrit van de Lindestraat 5C01<br />
-              3022 TA&nbsp;&nbsp;Rotterdam
+              Nijverheidstraat 278<br />
+              3071 GL&nbsp;&nbsp;Rotterdam
             </div>
             <div style={Styles.flexCol}>
               BTW NL001176503B66<br />
