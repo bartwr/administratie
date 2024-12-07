@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment'
 
 // Import models
@@ -59,8 +59,8 @@ s = {
   }
 }
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   return {
     payment: Payments.find({_id: props.paymentId}).fetch()[0]
   }
-}, Payment);
+})(Payment);

@@ -1,7 +1,5 @@
-import Radium, { StyleRoot } from 'radium';
-import React, { Component, PropTypes } from 'react';
-import { Meteor } from 'meteor/meteor';
-import { createContainer } from 'meteor/react-meteor-data';
+import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
  
 // Import models
 import { Invoices } from '../../api/invoices.js';
@@ -24,24 +22,20 @@ class InvoiceController extends Component {
   render() {
     if( ! this.props.invoices) return <div />
     return (
-      <StyleRoot>
+      <div>
         <div hidden={this.props.invoice && this.props.invoice._id}>
           <InvoicesStillToBePaid />
           <InvoiceList invoices={this.props.invoices} />
         </div>
         { this.props.invoice && this.props.invoice._id ? <InvoiceView key={this.props.invoice._id} invoice={this.props.invoice} /> : false }
-      </StyleRoot>
+      </div>
     );
   }
 }
 
-InvoiceController.propTypes = {
-  invoices: PropTypes.array
-};
-
-export default createContainer((props) => {
+export default withTracker((props) => {
   return {
     invoices: Invoices.find({"invoiceNumber": { $gte: "18000" }}, { sort: { invoiceNumber: -1 } }).fetch(),
     invoice: props.invoiceId ? Invoices.find({_id: props.invoiceId}).fetch()[0] : {}//#TODO: Convert this to a Maybe
   }
-}, Radium(InvoiceController));
+})(InvoiceController);

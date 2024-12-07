@@ -12,11 +12,10 @@
     "meteor-node-stubs": "^0.2.11",
     "mollie-api-node": "^1.4.0",
     "moment": "^2.29.1",
-    "radium": "^0.22.0",
     "ramda": "^0.22.1",
-    "react": "^15.6.2",
+    "react": "^19.0.0",
     "react-addons-pure-render-mixin": "^15.6.2",
-    "react-dom": "^15.6.2",
+    "react-dom": "^19.0.0",
     "react-mounter": "^1.2.0"
   },
   "devDependencies": {

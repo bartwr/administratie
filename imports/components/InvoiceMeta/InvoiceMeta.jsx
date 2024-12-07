@@ -1,6 +1,5 @@
-import Radium, { StyleRoot } from 'radium';
 import React, { Component, PropTypes } from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
  
 // Import models
 import { Invoices } from '../../api/invoices.js';
@@ -34,7 +33,7 @@ class InvoiceMeta extends Component {
   render() {
     if (!this.props.invoice) return <div />
     return (
-      <StyleRoot>
+      <>
         <h1>Edit invoice meta</h1>
         <ul>
           <li>{this.props.invoice.invoiceNumber}</li>
@@ -47,17 +46,17 @@ class InvoiceMeta extends Component {
           </Label>
           <button type="submit">Save</button>
         </form>
-      </StyleRoot>
+      </>
     );
   }
 }
 
-InvoiceMeta.propTypes = {
-  invoiceId: PropTypes.string.isRequired,
-};
+// InvoiceMeta.propTypes = {
+//   invoiceId: PropTypes.string.isRequired,
+// };
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   return {
     invoice: Invoices.find({_id: props.invoiceId}).fetch()[0]
   }
-}, Radium(InvoiceMeta));
+})(InvoiceMeta);

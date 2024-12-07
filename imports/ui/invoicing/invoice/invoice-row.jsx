@@ -1,4 +1,3 @@
-import Radium from 'radium';
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
@@ -40,4 +39,4 @@ class InvoiceRow extends Component {
 
 }
 
-export default Radium(InvoiceRow);
+export default InvoiceRow;

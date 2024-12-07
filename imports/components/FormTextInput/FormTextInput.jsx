@@ -1,5 +1,4 @@
-import Radium, { StyleRoot } from 'radium';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 class FormTextInput extends Component {
 
@@ -36,11 +35,11 @@ var s = {
 }
 
 // Validate the props passed to this components
-FormTextInput.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  required: React.PropTypes.string,
-  defaultValue: React.PropTypes.string,
-  placeholder: React.PropTypes.string
-};
+// FormTextInput.propTypes = {
+  // name: React.PropTypes.string.isRequired,
+  // required: React.PropTypes.string,
+  // defaultValue: React.PropTypes.string,
+  // placeholder: React.PropTypes.string
+// };
 
-module.exports = Radium(FormTextInput)
+module.exports = FormTextInput;

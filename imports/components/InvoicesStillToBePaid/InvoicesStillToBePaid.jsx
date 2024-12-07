@@ -1,6 +1,5 @@
-import Radium, { StyleRoot } from 'radium';
-import React, { Component, PropTypes } from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
+import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 import R from 'ramda';
  
 // Import models
@@ -17,7 +16,7 @@ class InvoicesStillToBePaid extends Component {
     return (
       <div key={invoice._id} style={s.row}>
         <div style={s.col}>{invoice.invoiceNumber}</div>
-        <div style={s.col}>{invoice.invoiceDate.toString()}</div>
+        <div style={s.col}>{invoice.invoiceDate?.toString()}</div>
         <div style={s.col}>{invoice.label}</div>
         <div style={s.col}>{invoice.title}</div>
         <div style={s.col}>{letsplit}</div>
@@ -55,12 +54,8 @@ var s = {
   }
 }
 
-InvoicesStillToBePaid.propTypes = {
-  invoices: PropTypes.string
-};
-
-export default createContainer((props) => {
+export default withTracker((props) => {
   return {
     invoicesStillToBePaid: Invoices.find({"meta.dateFullyPaid": null, "invoiceDate": { $gte: "2018-01-01" } }, {sort: {invoiceNumber: -1}}).fetch()
   }
-}, Radium(InvoicesStillToBePaid));
+})(InvoicesStillToBePaid);

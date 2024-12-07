@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
+import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
  
 // Import models
 import { Invoices } from '../../api/invoices.js';
@@ -23,13 +23,13 @@ class InvoiceMeta extends Component {
     )
   }
 }
+// 
+// InvoiceMeta.propTypes = {
+//   invoiceId: PropTypes.string.isRequired,
+// };
 
-InvoiceMeta.propTypes = {
-  invoiceId: PropTypes.string.isRequired,
-};
-
-export default createContainer((props) => {
+export default withTracker((props) => {
   return {
     invoice: Invoices.find({_id: props.invoiceId}).fetch()[0]
   }
-}, InvoiceMeta);
+})(InvoiceMeta);

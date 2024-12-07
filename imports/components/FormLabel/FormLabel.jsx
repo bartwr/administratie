@@ -1,5 +1,4 @@
-import Radium, { StyleRoot } from 'radium';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 class FormLabel extends Component {
 
@@ -31,10 +30,4 @@ var s = {
   }
 }
 
-// Validate the props passed to this components
-FormLabel.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  children: React.PropTypes.any.isRequired
-};
-
-export default Radium(FormLabel);
+export default FormLabel;

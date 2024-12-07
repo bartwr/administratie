@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
-import Radium from 'radium';
+import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment';
 
 // Import models
@@ -109,8 +108,8 @@ var s = {
   }
 }
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   return {
     payment: Payments.find({invoiceId: props.invoice._id}).fetch()[0]
   }
-}, Radium(Invoice));
+})(Invoice);

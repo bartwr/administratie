@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { createContainer } from 'meteor/react-meteor-data';
+import { withTracker } from 'meteor/react-meteor-data';
 import moment from 'moment'
 
 // Import models
@@ -51,7 +51,7 @@ Order.defaultProps = {
   invoice: {}
 }
 
-export default createContainer((props) => {
+export default withTracker((props) => {
   var payment;
 
   if(props.paymentId)
@@ -60,4 +60,4 @@ export default createContainer((props) => {
   return {
     payment: payment
   }
-}, Order);
+})(Order);
