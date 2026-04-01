@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Meteor } from 'meteor/meteor';
  
 // Import models
 import { Invoices } from '../../../api/invoices.js';
@@ -15,6 +13,7 @@ class List extends Component {
  
   constructor(props) {
     super(props);
+    this.textInputRef = React.createRef();
   }
 
   /**
@@ -55,7 +54,8 @@ class List extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const field = ReactDOM.findDOMNode(this.refs.textInput);
+    const field = this.textInputRef.current;
+    if (!field) return;
     const invoiceNumber = field.value.trim();
 
     let lastInsertedId = Invoices.insert({
@@ -72,7 +72,7 @@ class List extends Component {
       <div style={styles.base}>
         <header>
           <form onSubmit={this.handleSubmit.bind(this)} style={styles.form}>
-            <input type="text" ref="textInput" placeholder="Typ een factuurnummer om een factuur toe te voegen" style={Object.assign({}, FormStyles.input, styles.input)}
+            <input type="text" ref={this.textInputRef} placeholder="Typ een factuurnummer om een factuur toe te voegen" style={Object.assign({}, FormStyles.input, styles.input)}
             />
           </form>
         </header>

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Meteor } from 'meteor/meteor';
 
 // Import models
 import { Invoices } from '../../../api/invoices.js';
@@ -13,6 +11,10 @@ class ProviderAddress extends Component {
  
   constructor(props) {
     super(props);
+    this.invoiceNumberRef = React.createRef();
+    this.invoiceDateRef = React.createRef();
+    this.labelRef = React.createRef();
+    this.titleRef = React.createRef();
   }
 
   // updateClient :: Event -> Invoice
@@ -30,11 +32,11 @@ class ProviderAddress extends Component {
 
     e.preventDefault();
 
-    this.props.invoice.invoiceNumber = this.refs.invoiceNumber.value;
-    this.props.invoice.label = this.refs.label.value;
-    this.props.invoice.title = this.refs.title.value;
-    if(this.refs.invoiceDate.value){
-      this.props.invoice.invoiceDate = this.refs.invoiceDate.value;
+    this.props.invoice.invoiceNumber = this.invoiceNumberRef.current.value;
+    this.props.invoice.label = this.labelRef.current.value;
+    this.props.invoice.title = this.titleRef.current.value;
+    if(this.invoiceDateRef.current.value){
+      this.props.invoice.invoiceDate = this.invoiceDateRef.current.value;
     }
 
     Invoices.update(this.props.invoice._id, this.props.invoice);
@@ -49,21 +51,21 @@ class ProviderAddress extends Component {
                     : this.props.invoice.invoiceDate;
 
     return (
-      <section ref="providerAddress" style={Styles.flexCol}>
+      <section style={Styles.flexCol}>
         
         <div style={this.props.styles.hideWhilePrinting}>
 
           <label style={this.props.styles.label}>Factuurnummer</label>
-          <input ref="invoiceNumber" value={this.props.invoice.invoiceNumber} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
+          <input ref={this.invoiceNumberRef} value={this.props.invoice.invoiceNumber} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
 
           <label style={this.props.styles.label}>Factuurdatum</label>
-          <input ref="invoiceDate" type="text" value={invoiceDate} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
+          <input ref={this.invoiceDateRef} type="text" value={invoiceDate} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
 
           <label style={this.props.styles.label}>Periode</label>
-          <input ref="label" value={this.props.invoice.label} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
+          <input ref={this.labelRef} value={this.props.invoice.label} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
           
           <label style={this.props.styles.label}>Betreft</label>
-          <input ref="title" value={this.props.invoice.title} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
+          <input ref={this.titleRef} value={this.props.invoice.title} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
 
         </div>
 

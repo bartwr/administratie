@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import $ from 'jquery';
 
@@ -19,6 +18,12 @@ class Invoice extends Component {
  
   constructor(props) {
     super(props);
+    this.fieldRefs = {
+      title: React.createRef(),
+      numberOf: React.createRef(),
+      basePrice: React.createRef(),
+      rowPrice: React.createRef(),
+    };
   }
 
   formatPrice(price) {
@@ -50,8 +55,8 @@ class Invoice extends Component {
 
   // getFieldValue :: String refName -> String value
   getFieldValue(refName){
-    const field = ReactDOM.findDOMNode(this.refs[refName]);
-    return field.value.trim();
+    const field = this.fieldRefs[refName] && this.fieldRefs[refName].current;
+    return field ? field.value.trim() : '';
   }
 
   // handleInvoiceRowSubmit :: Event -> ?
@@ -82,7 +87,14 @@ class Invoice extends Component {
   }
 
   // calculateRowPrice :: ? -> ?
-  calculateRowPrice() { this.refs.rowPrice.value = this.refs.numberOf.value * this.refs.basePrice.value }
+  calculateRowPrice() {
+    const rowPrice = this.fieldRefs.rowPrice.current;
+    const numberOf = this.fieldRefs.numberOf.current;
+    const basePrice = this.fieldRefs.basePrice.current;
+
+    if (!rowPrice || !numberOf || !basePrice) return;
+    rowPrice.value = numberOf.value * basePrice.value;
+  }
 
   // handleNumberOfChange :: Event -> ?
   handleNumberOfChange(e) { this.calculateRowPrice() }
@@ -110,7 +122,7 @@ class Invoice extends Component {
               <ProviderAddress invoice={this.props.invoice} styles={styles}  />
             </div>
 
-            <section ref="invoiceRows" style={Object.assign({}, styles.flexRow, styles.invoiceRows)}>
+            <section style={Object.assign({}, styles.flexRow, styles.invoiceRows)}>
 
               <div style={Object.assign({}, Styles.flexRow, styles.invoiceRow)}>
                 <label style={Object.assign({}, styles.label, styles.descriptionRow)}>Omschrijving</label>
@@ -118,10 +130,10 @@ class Invoice extends Component {
               </div>
               {this.renderInvoiceRows()}
               <form onSubmit={this.handleInvoiceRowSubmit.bind(this)} style={Object.assign({}, styles.form, styles.hideWhilePrinting)}>
-                <input type="text" ref="title" placeholder="title" style={Object.assign({}, FormStyles.input, styles.input)} />
-                <input ref="numberOf" type="text" ref="numberOf" placeholder="numberOf" onChange={this.handleNumberOfChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
-                <input ref="basePrice" type="text" ref="basePrice" placeholder="basePrice" onChange={this.handleBasePriceChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
-                <input ref="rowPrice" type="text" ref="rowPrice" placeholder="rowPrice" style={Object.assign({}, FormStyles.input, styles.input)} />
+                <input type="text" ref={this.fieldRefs.title} placeholder="title" style={Object.assign({}, FormStyles.input, styles.input)} />
+                <input ref={this.fieldRefs.numberOf} type="text" placeholder="numberOf" onChange={this.handleNumberOfChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
+                <input ref={this.fieldRefs.basePrice} type="text" placeholder="basePrice" onChange={this.handleBasePriceChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
+                <input ref={this.fieldRefs.rowPrice} type="text" placeholder="rowPrice" style={Object.assign({}, FormStyles.input, styles.input)} />
                 <button type="submit" style={Object.assign({}, FormStyles.input, styles.input)}>v</button>
               </form>
 
@@ -165,14 +177,14 @@ class Invoice extends Component {
 
             </section>
 
-            <section ref="endText" style={Object.assign({}, styles.endText)}>
+            <section style={Object.assign({}, styles.endText)}>
               Gelieve het bedrag van <b>&euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}</b> over te maken naar rekeningnummer <b>NL10 BUNQ 2094 3091 34</b><br />
               ten name van <b>Tuxion B.V.</b>, onder vermelding van factuurnummer <b>{this.props.invoice.invoiceNumber}.</b>
             </section>
 
           </div>
 
-          <footer ref="footer" style={Object.assign({}, Styles.flexRow, styles.footer)}>
+          <footer style={Object.assign({}, Styles.flexRow, styles.footer)}>
             <div style={Styles.flexCol}>
               <b>Tuxion B.V.</b><br />
               +31 (0) 6 46 38 68 64

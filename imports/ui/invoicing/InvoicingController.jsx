@@ -9,17 +9,30 @@ import InvoiceList from './list/list.jsx';
 import InvoiceView from './invoice/invoice.jsx';
 import InvoicesStillToBePaid from '/imports/components/InvoicesStillToBePaid/InvoicesStillToBePaid.jsx';
 
+const PASSWORD_SESSION_KEY = 'invoicing-password-ok';
+
+const hasAccess = () => {
+  if (window.sessionStorage.getItem(PASSWORD_SESSION_KEY) === '1') return true;
+
+  const answer = window.prompt('Wat is het wachtwoord?');
+  if (answer === 'hallo daar') {
+    window.sessionStorage.setItem(PASSWORD_SESSION_KEY, '1');
+    return true;
+  }
+
+  window.location = 'https://www.bartroorda.nl';
+  return false;
+};
+
 class InvoiceController extends Component {
  
   constructor(props) {
     super(props);
-
-    if( prompt('Wat is het wachtwoord?') != 'hallo daar' ) {
-      document.location = 'https://www.bartroorda.nl';
-    }
+    this.authorized = hasAccess();
   }
 
   render() {
+    if (!this.authorized) return null;
     if( ! this.props.invoices) return <div />
     return (
       <div>

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { Meteor } from 'meteor/meteor';
 
 // Import models
 import { Invoices } from '../../../api/invoices.js';
@@ -13,11 +11,12 @@ class ClientAddress extends Component {
  
   constructor(props) {
     super(props);
+    this.clientInputRef = React.createRef();
   }
 
   // updateClient :: Event -> Invoice
   updateClient(e) {
-    this.props.invoice.client = this.refs.clientInput.value;
+    this.props.invoice.client = this.clientInputRef.current.value;
     this.forceUpdate();
     Invoices.update(this.props.invoice._id, Object.assign({}, this.props.invoice, {
       client: this.props.invoice.client
@@ -27,8 +26,8 @@ class ClientAddress extends Component {
   render() {
     const client = (this.props.invoice && this.props.invoice.client) ? this.props.invoice.client.replace("\n", '<br />').replace("\n", '<br />').replace("\n", '<br />') : '';
     return (
-      <section ref="clientAddress" style={Styles.flexCol}>
-        <textarea ref="clientInput" value={this.props.invoice.client} onChange={this.updateClient.bind(this)} style={Object.assign({}, styles.clientInput, this.props.styles.hideWhilePrinting)}></textarea>
+      <section style={Styles.flexCol}>
+        <textarea ref={this.clientInputRef} value={this.props.invoice.client} onChange={this.updateClient.bind(this)} style={Object.assign({}, styles.clientInput, this.props.styles.hideWhilePrinting)}></textarea>
         <div className="firstLineBold" style={Object.assign({}, this.props.styles.showWhilePrinting)} dangerouslySetInnerHTML={{__html: client}} />
       </section>
     );
