@@ -1,5 +1,4 @@
 import Mollie from 'mollie-api-node';
-import Future from 'fibers/future';
 
 // Insert models
 import { Payments } from '../../imports/models/Payments.js';
@@ -40,30 +39,27 @@ Meteor.methods({
     return res;
 
   },
-  'mollie.doPayment'({ amount, description, redirectUrl, webhookUrl }) {
+  async 'mollie.doPayment'({ amount, description, redirectUrl, webhookUrl }) {
     // new SimpleSchema({
     //   something: { type: String }
     // }).validate({ todoId, newText });
 
     console.log('Starting to do a payment')
 
-    mollie = new Mollie.API.Client;
+    const mollie = new Mollie.API.Client();
     mollie.setApiKey(process.env.MOLLIE_API_KEY);
 
     console.log('process.env.MOLLIE_API_KEY', process.env.MOLLIE_API_KEY);
 
-    var future = new Future();
-    mollie.payments.create({
-      amount:      amount,
-      description: description,
-      redirectUrl: redirectUrl,
-      webhookUrl:  webhookUrl
-    }, Meteor.bindEnvironment(function (payment) {
-      console.log(payment);
-      return future.return(payment.getPaymentUrl());
-    }));
+    const payment = await mollie.payments.create({
+      amount,
+      description,
+      redirectUrl,
+      webhookUrl
+    });
+    console.log(payment);
     return {
-      paymentUrl: future.wait()
-    }
+      paymentUrl: payment.getPaymentUrl()
+    };
   }
 });
