@@ -1,5 +1,8 @@
 import React from 'react';
-import {mount} from 'react-mounter';
+import { createRoot } from 'react-dom/client';
+
+const container = document.getElementById('root');
+const root = createRoot(container); 
 
 /**
  *  App
@@ -14,9 +17,9 @@ import Payment from '../imports/components/Payment/Payment.jsx';
 FlowRouter.route('/pay/:paymentId', {
   name: 'payment',
   action(props) {
-    mount(App, {
-      content: (<Payment paymentId={props.paymentId} />)
-    });
+    root.render(<App content={
+      <Payment paymentId={props.paymentId} />
+    } />);
   }
 });
 
@@ -25,9 +28,9 @@ import Order from '../imports/components/Order/Order.jsx';
 FlowRouter.route('/order/:paymentId', {
   name: 'order',
   action(props) {
-    mount(App, {
-      content: (<Order paymentId={props.paymentId} />)
-    });
+    root.render(<App content={
+      <Order paymentId={props.paymentId} />
+    } />);
   }
 });
 
@@ -39,26 +42,26 @@ import InvoicingController from '../imports/ui/invoicing/InvoicingController.jsx
 FlowRouter.route('/', {
   name: 'dashboard',
   action() {
-    mount(App, {
-      content: (<InvoicingController />)
-    });
+    root.render(<App content={
+      <InvoicingController />
+    } />);
   }
 });
 
 FlowRouter.route('/invoice', {
   action() {
-    mount(App, {
-      content: (<InvoicingController />)
-    });
+    root.render(<App content={
+      <InvoicingController />
+    } />);
   }
 });
 
 FlowRouter.route('/invoice/:invoiceId', {
   name: 'invoice',
   action(params) {
-    mount(App, {
-      content: (<InvoicingController invoiceId={params.invoiceId} />)
-    });
+    root.render(<App content={
+      <InvoicingController invoiceId={params.invoiceId} />
+    } />);
   }
 });
 
@@ -67,8 +70,8 @@ import InvoiceMeta from '/imports/containers/InvoiceMeta/InvoiceMeta.jsx';
 FlowRouter.route('/invoice/:invoiceId/meta', {
   name: 'invoiceMeta',
   action(params) {
-    mount(App, {
-      content: (<InvoiceMeta invoiceId={params.invoiceId} />)
-    });
+    root.render(<App content={
+      <InvoiceMeta invoiceId={params.invoiceId} />
+    } />);
   }
 });

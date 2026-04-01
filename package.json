@@ -15,8 +15,7 @@
     "ramda": "^0.22.1",
     "react": "^19.0.0",
     "react-addons-pure-render-mixin": "^15.6.2",
-    "react-dom": "^19.0.0",
-    "react-mounter": "^1.2.0"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "core-js": "^2.5.3"
