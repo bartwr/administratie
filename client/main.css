@@ -9,6 +9,10 @@ html, body{
   font-weight:bold;
 }
 
+.invoice-show-print {
+  display: none;
+}
+
 @media print {
 
   html, body{ 
@@ -16,4 +20,42 @@ html, body{
     overflow:hidden;
   }
 
+  .invoice-overlay {
+    position: static !important;
+    background: transparent !important;
+  }
+
+  .invoice-sheet {
+    height: 100vh !important;
+    max-height: 980px !important;
+    margin: 0 !important;
+    padding: 165px 40px 56px 40px !important;
+    background-position: 40px 26px !important;
+    background-size: 180px !important;
+  }
+
+  .invoice-logo {
+    top: 35px !important;
+    left: 40px !important;
+  }
+
+  .invoice-end-text {
+    right: 20px !important;
+    bottom: 80px !important;
+    left: 20px !important;
+  }
+
+  .invoice-footer {
+    right: 20px !important;
+    bottom: 0 !important;
+    left: 20px !important;
+  }
+
+  .invoice-hide-print {
+    display: none !important;
+  }
+
+  .invoice-show-print {
+    display: block !important;
+  }
 }

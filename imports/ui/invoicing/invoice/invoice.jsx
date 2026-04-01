@@ -111,11 +111,11 @@ class Invoice extends Component {
 
   render() {
     return (
-      <div style={styles.overlay} onClick={this.closeInvoice.bind(this)}>
-        <div style={styles.invoice} id="invoice-to-print">
+      <div className="invoice-overlay" style={styles.overlay} onClick={this.closeInvoice.bind(this)}>
+        <div className="invoice-sheet" style={styles.invoice} id="invoice-to-print">
           <div style={{flex: 1}}>
 
-            <img src="/Logo-tuxionzwart_puntblauw.png" style={styles.logo} />
+            <img className="invoice-logo" src="/Logo-tuxionzwart_puntblauw.png" style={styles.logo} />
 
             <div style={Styles.flexRow}>
               <ClientAddress invoice={this.props.invoice} styles={styles} />
@@ -129,7 +129,7 @@ class Invoice extends Component {
                 <label style={Object.assign({}, styles.label, styles.priceRow)}>Bedrag</label>
               </div>
               {this.renderInvoiceRows()}
-              <form onSubmit={this.handleInvoiceRowSubmit.bind(this)} style={Object.assign({}, styles.form, styles.hideWhilePrinting)}>
+              <form className="invoice-hide-print" onSubmit={this.handleInvoiceRowSubmit.bind(this)} style={Object.assign({}, styles.form)}>
                 <input type="text" ref={this.fieldRefs.title} placeholder="title" style={Object.assign({}, FormStyles.input, styles.input)} />
                 <input ref={this.fieldRefs.numberOf} type="text" placeholder="numberOf" onChange={this.handleNumberOfChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
                 <input ref={this.fieldRefs.basePrice} type="text" placeholder="basePrice" onChange={this.handleBasePriceChange.bind(this)} style={Object.assign({}, FormStyles.input, styles.input)} />
@@ -177,14 +177,14 @@ class Invoice extends Component {
 
             </section>
 
-            <section style={Object.assign({}, styles.endText)}>
+            <section className="invoice-end-text" style={Object.assign({}, styles.endText)}>
               Gelieve het bedrag van <b>&euro; {this.formatPrice(this.props.invoice.invoicePrice() * 1.21)}</b> over te maken naar rekeningnummer <b>NL10 BUNQ 2094 3091 34</b><br />
               ten name van <b>Tuxion B.V.</b>, onder vermelding van factuurnummer <b>{this.props.invoice.invoiceNumber}.</b>
             </section>
 
           </div>
 
-          <footer style={Object.assign({}, Styles.flexRow, styles.footer)}>
+          <footer className="invoice-footer" style={Object.assign({}, Styles.flexRow, styles.footer)}>
             <div style={Styles.flexCol}>
               <b>Tuxion B.V.</b><br />
               +31 (0) 6 46 38 68 64

@@ -53,7 +53,7 @@ class ProviderAddress extends Component {
     return (
       <section style={Styles.flexCol}>
         
-        <div style={this.props.styles.hideWhilePrinting}>
+        <div className="invoice-hide-print" style={this.props.styles.hideWhilePrinting}>
 
           <label style={this.props.styles.label}>Factuurnummer</label>
           <input ref={this.invoiceNumberRef} value={this.props.invoice.invoiceNumber} onChange={this.handleChange.bind(this)} style={Object.assign({}, FormStyles.input, this.props.styles.input)} />
@@ -69,7 +69,7 @@ class ProviderAddress extends Component {
 
         </div>
 
-        <div style={this.props.styles.showWhilePrinting}>
+        <div className="invoice-show-print" style={this.props.styles.showWhilePrinting}>
 
           <label style={this.props.styles.label}>Factuurnummer</label>
           {this.props.invoice.invoiceNumber}

@@ -27,8 +27,8 @@ class ClientAddress extends Component {
     const client = (this.props.invoice && this.props.invoice.client) ? this.props.invoice.client.replace("\n", '<br />').replace("\n", '<br />').replace("\n", '<br />') : '';
     return (
       <section style={Styles.flexCol}>
-        <textarea ref={this.clientInputRef} value={this.props.invoice.client} onChange={this.updateClient.bind(this)} style={Object.assign({}, styles.clientInput, this.props.styles.hideWhilePrinting)}></textarea>
-        <div className="firstLineBold" style={Object.assign({}, this.props.styles.showWhilePrinting)} dangerouslySetInnerHTML={{__html: client}} />
+        <textarea ref={this.clientInputRef} value={this.props.invoice.client} onChange={this.updateClient.bind(this)} className="invoice-hide-print" style={Object.assign({}, styles.clientInput)}></textarea>
+        <div className="firstLineBold invoice-show-print" style={Object.assign({}, this.props.styles.showWhilePrinting)} dangerouslySetInnerHTML={{__html: client}} />
       </section>
     );
   }
